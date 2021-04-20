@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Keeping Books</string>
+
+    <string name="list_payment_info_cost">$%1$.2f</string>
+    <string name="content_description_icon_of_payment_type">Icon of payment type</string>
+    <string name="content_description_button_to_delete_a_payment">Button to delete a payment</string>
+    <string name="content_description_button_to_edit_a_payment">Button to edit a payment</string>
 </resources>

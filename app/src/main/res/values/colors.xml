@@ -7,4 +7,19 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    //Palette Color
+    <color name="main">#3D5A80</color>
+    <color name="secondary">#98C1D9</color>
+    <color name="background_light">#E0FBFC</color>
+    <color name="background_dark">#293241</color>
+    <color name="error">#EE6C4D</color>
+
+    <color name="debit">#34B9DB</color>
+    <color name="credit">#87D37C</color>
+    <color name="cash">#BE90D4</color>
+
+    <color name="text">#232323</color>
+
+
 </resources>
