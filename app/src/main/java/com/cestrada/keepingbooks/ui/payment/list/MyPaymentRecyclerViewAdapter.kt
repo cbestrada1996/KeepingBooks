@@ -5,6 +5,7 @@ import android.view.*
 import androidx.recyclerview.widget.RecyclerView
 import com.cestrada.keepingbooks.R
 import com.cestrada.keepingbooks.model.Payment
+import com.cestrada.keepingbooks.ui.payment.list.PaymentItemViewHolder
 
 class MyPaymentRecyclerViewAdapter(
         private val values: List<Payment>,
@@ -32,13 +33,20 @@ class MyPaymentRecyclerViewAdapter(
     override fun onBindViewHolder(holder: PaymentItemViewHolder, position: Int) {
         val item = values[position]
 
-        holder.setUpView(item, listener)
+        holder.setUpPayment(item)
+        holder.setOnDeleteListener(object : PaymentItemViewHolder.OnDeleteListener {
+            override fun onDelete() {
+                listener.onDelete(item, position)
+            }
+        })
+
     }
 
     override fun getItemCount(): Int = values.size
 }
 
 interface OnPaymentOptionsClickListener {
-    fun onDelete(payment: Payment)
-    fun onEdit(payment: Payment)
+    fun onDelete(payment: Payment, position: Int)
+    fun onEdit(payment: Payment, position: Int)
 }
+

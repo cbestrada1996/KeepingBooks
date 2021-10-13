@@ -1,9 +1,6 @@
 package com.cestrada.keepingbooks.cache.payment
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 
 @Dao
 interface PaymentDao {
@@ -11,7 +8,10 @@ interface PaymentDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(paymentCacheEntity: PaymentCacheEntity): Long
 
-    @Query("SELECT * FROM payments")
+    @Query("SELECT * FROM payments ORDER BY date DESC")
     suspend fun get(): List<PaymentCacheEntity>
+
+    @Delete
+    suspend fun delete(paymentCacheEntity: PaymentCacheEntity): Int
 
 }

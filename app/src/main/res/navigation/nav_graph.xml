@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_graph"
-    app:startDestination="@id/mainFragment">
+    app:startDestination="@id/paymentFormFragment">
 
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.cestrada.keepingbooks.ui.MainFragment"
         android:label="MainFragment" />
+    <fragment
+        android:id="@+id/paymentFormFragment"
+        android:name="com.cestrada.keepingbooks.ui.payment.form.PaymentFormFragment"
+        android:label="PaymentFormFragment" />
+
 </navigation>

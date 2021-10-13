@@ -31,5 +31,9 @@ enum class PaymentType {
                 CREDIT  -> "CREDIT"
             }
         }
+
+        fun getAll(): List<PaymentType>{
+            return listOf(CREDIT, DEBIT, CASH)
+        }
     }
 }

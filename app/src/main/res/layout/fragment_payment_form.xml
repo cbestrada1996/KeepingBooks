@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/field_description"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:hint="@string/hint_payment_description"
+        android:labelFor="@id/auto_complete_description"
+        >
+        <AutoCompleteTextView
+            android:id="@+id/auto_complete_description"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center_vertical"
+            android:maxLines="1"
+            android:imeOptions="actionNext"
+            android:singleLine="true"
+            style="@style/Widget.MaterialComponents.AutoCompleteTextView.OutlinedBox"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/field_payment"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/field_description"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:hint="@string/payment_form_hint_total"
+        android:labelFor="@id/edit_payment"
+        >
+        <EditText
+            android:id="@+id/edit_payment"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center_vertical"
+            android:maxLines="1"
+            android:maxLength="10"
+            android:imeOptions="actionNext"
+            style="@style/Widget.MaterialComponents.AutoCompleteTextView.OutlinedBox"
+            android:importantForAutofill="no"
+            android:inputType="numberDecimal"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <Spinner
+        android:id="@+id/spinner_type"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="21dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/round_line_border_background"
+        app:layout_constraintBottom_toBottomOf="@+id/field_payment"
+        app:layout_constraintLeft_toRightOf="@id/field_payment"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/field_description" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:layout_marginStart="20dp"
+        android:paddingHorizontal="4dp"
+        app:layout_constraintLeft_toLeftOf="@id/spinner_type"
+        app:layout_constraintBottom_toTopOf="@id/spinner_type"
+        android:text="@string/hint_payment_type"
+        android:textColor="@color/main"
+        android:textSize="12sp"
+        android:translationY="10dp"
+        />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/field_date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/field_payment"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/image_calendar"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:hint="@string/hint_date"
+        android:labelFor="@id/edit_date"
+        >
+        <EditText
+            android:id="@+id/edit_date"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center_vertical"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:cursorVisible="false"
+            android:maxLines="1"
+            android:imeOptions="actionNext"
+            style="@style/Widget.MaterialComponents.AutoCompleteTextView.OutlinedBox"
+            android:importantForAutofill="no"
+            android:inputType="date"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <ImageView
+        android:id="@+id/image_calendar"
+        android:contentDescription="@string/content_description_button_calendar"
+        android:layout_width="@dimen/icon_norm_size"
+        android:layout_height="@dimen/icon_norm_size"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/ic_calendar"
+        app:tint="@color/main"
+        android:padding="5dp"
+        app:layout_constraintBottom_toBottomOf="@+id/field_date"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/field_payment" />
+
+    <HorizontalScrollView
+        android:id="@+id/horizontal_scroll_tags"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginHorizontal="16dp"
+        android:padding="5dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/field_date"
+        android:background="@drawable/round_line_border_background_inactive"
+        >
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chip_group_tags"
+            android:padding="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp">
+
+        </com.google.android.material.chip.ChipGroup>
+
+    </HorizontalScrollView>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/field_tags"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/horizontal_scroll_tags"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/image_add_tags"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:hint="@string/hint_tags"
+        android:labelFor="@id/edit_tags"
+        >
+        <EditText
+            android:id="@+id/edit_tags"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center_vertical"
+            android:maxLines="1"
+            android:maxLength="10"
+            android:imeOptions="actionDone"
+            style="@style/Widget.MaterialComponents.AutoCompleteTextView.OutlinedBox"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <ImageView
+        android:id="@+id/image_add_tags"
+        android:contentDescription="@string/content_description_button_add_tags"
+        android:layout_width="@dimen/icon_norm_size"
+        android:layout_height="@dimen/icon_norm_size"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/circular_background"
+        android:backgroundTint="@color/main"
+        android:padding="5dp"
+        android:src="@drawable/ic_add"
+        app:layout_constraintBottom_toBottomOf="@+id/field_tags"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/horizontal_scroll_tags" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

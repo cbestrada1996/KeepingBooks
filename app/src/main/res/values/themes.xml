@@ -2,15 +2,117 @@
     <!-- Base application theme. -->
     <style name="Theme.KeepingBooks" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
-        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorPrimary">@color/main</item>
+        <item name="colorPrimaryVariant">@color/background_dark</item>
+        <item name="colorOnPrimary">@color/background_light</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorSecondary">@color/secondary</item>
         <item name="colorSecondaryVariant">@color/teal_700</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="Icons">
+        <item name="android:layout_marginEnd">12dp</item>
+        <item name="android:background">@drawable/circular_background</item>
+        <item name="android:padding">5dp</item>
+    </style>
+
+    <!--  Payment List Item  -->
+    <style name="PaymentItem"/>
+
+    <style name="PaymentItem.Options"/>
+    <style name="PaymentItem.Options.Background">
+        <item name="android:background">@drawable/round_background</item>
+        <item name="android:backgroundTint">@color/secondary</item>
+    </style>
+    <style name="PaymentItem.Options.Button" parent="Icons">
+        <item name="android:alpha">0.06</item>
+    </style>
+    <style name="PaymentItem.Options.Button.Delete" parent="PaymentItem.Options.Button">
+        <item name="android:layout_width">@dimen/icon_min_size</item>
+        <item name="android:layout_height">@dimen/icon_min_size</item>
+        <item name="android:backgroundTint">@color/delete</item>
+        <item name="android:src">@drawable/ic_delete</item>
+        <item name="android:contentDescription">@string/content_description_button_to_delete_a_payment</item>
+    </style>
+    <style name="PaymentItem.Options.Button.Edit" parent="PaymentItem.Options.Button">
+        <item name="android:layout_width">@dimen/icon_min_size</item>
+        <item name="android:layout_height">@dimen/icon_min_size</item>
+        <item name="android:backgroundTint">@color/edit</item>
+        <item name="android:src">@drawable/ic_edit</item>
+        <item name="android:contentDescription">@string/content_description_button_to_edit_a_payment</item>
+    </style>
+
+    <style name="PaymentItem.Info"/>
+    <style name="PaymentItem.Info.Background">
+        <item name="android:background">@drawable/round_background</item>
+        <item name="android:backgroundTint">@color/white</item>
+    </style>
+    <style name="PaymentItem.Info.Type" parent="Icons">
+        <item name="android:layout_width">@dimen/icon_norm_size</item>
+        <item name="android:layout_height">@dimen/icon_norm_size</item>
+        <item name="android:backgroundTint">@color/background_dark</item>
+        <item name="android:src">@drawable/ic_payment_credit</item>
+        <item name="android:contentDescription">@string/content_description_icon_of_payment_type</item>
+        <item name="android:layout_marginStart">16dp</item>
+    </style>
+    <style name="PaymentItem.Info.Text">
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:textColor">@color/text</item>
+    </style>
+    <style name="PaymentItem.Info.Description" parent="PaymentItem.Info.Text">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:maxWidth">190dp</item>
+        <item name="android:layout_marginHorizontal">5dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+    <style name="PaymentItem.Info.Total" parent="PaymentItem.Info.Text">
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_width">80dp</item>
+        <item name="android:layout_marginHorizontal">5dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+    <style name="PaymentItem.Info.Date" parent="PaymentItem.Info.Text">
+        <item name="android:maxLines">2</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">80dp</item>
+        <item name="android:layout_marginHorizontal">5dp</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="PaymentItem.Deleting"/>
+    <style name="PaymentItem.Deleting.Text">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:background">@color/red</item>
+        <item name="android:paddingStart">15dp</item>
+        <item name="android:paddingEnd">15dp</item>
+        <item name="android:text">DELETING...</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:letterSpacing">0.1</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+    <style name="PaymentItem.Deleting.Button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:backgroundTint">@color/white</item>
+        <item name="android:text">Cancel</item>
+        <item name="android:textColor">@color/red</item>
+        <item name="android:layout_marginEnd">15dp</item>
+        <item name="android:clickable">false</item>
+        <item name="android:visibility">gone</item>
+    </style>
+
+
 </resources>

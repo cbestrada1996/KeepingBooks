@@ -17,21 +17,10 @@ class PaymentsViewModel
         private val paymentRepository: PaymentRepository,
         private val savedStateHandle: SavedStateHandle
 ) : ViewModel()  {
-    private val _dataState: MutableLiveData<DataState<List<Payment>>> = MutableLiveData()
+    private val _dataState: MutableLiveData<DataState<List<Payment>, PaymentRepository.Type>> = MutableLiveData()
 
-    val dataState: LiveData<DataState<List<Payment>>>
+    val dataState: LiveData<DataState<List<Payment>, PaymentRepository.Type>>
         get() = _dataState
-
-    val onPaymentOptionsClickListener = object : OnPaymentOptionsClickListener {
-        override fun onDelete(payment: Payment) {
-
-        }
-
-        override fun onEdit(payment: Payment) {
-
-        }
-
-    }
 
     fun setStateEvent(paymentStateEvent: PaymentStateEvent){
         viewModelScope.launch {
@@ -43,6 +32,14 @@ class PaymentsViewModel
                             }
                             .launchIn(viewModelScope)
                 }
+                is PaymentStateEvent.RemovePayment -> {
+                    paymentRepository.removePayment(paymentStateEvent.payment)
+                        .onEach { dataState ->
+                            _dataState.value = dataState
+                        }
+                        .launchIn(viewModelScope)
+
+                }
             }
         }
     }
@@ -50,5 +47,6 @@ class PaymentsViewModel
 
 sealed class PaymentStateEvent {
     object  GetPaymentsEvents: PaymentStateEvent()
+    data class RemovePayment(val payment: Payment): PaymentStateEvent()
     object None: PaymentStateEvent()
 }

@@ -5,4 +5,16 @@
     <string name="content_description_icon_of_payment_type">Icon of payment type</string>
     <string name="content_description_button_to_delete_a_payment">Button to delete a payment</string>
     <string name="content_description_button_to_edit_a_payment">Button to edit a payment</string>
+    <string name="content_description_logo_on_progress_bar">Logo on progress bar</string>
+    <string name="content_description_background_alert_image">Background alert image</string>
+    <string name="bottom_nav_payments">Payments</string>
+    <string name="content_description_button_to_add_new_payments">Button to add new payments</string>
+    <string name="hint_payment_description">Payment Description</string>
+    <string name="payment_form_hint_total">Total $</string>
+    <string name="content_description_payment_type_icon">Payment Type Icon</string>
+    <string name="hint_payment_type">Payment Type</string>
+    <string name="hint_date">Date</string>
+    <string name="content_description_button_calendar">Button Calendar</string>
+    <string name="content_description_button_add_tags">Button add tags</string>
+    <string name="hint_tags">Tags</string>
 </resources>

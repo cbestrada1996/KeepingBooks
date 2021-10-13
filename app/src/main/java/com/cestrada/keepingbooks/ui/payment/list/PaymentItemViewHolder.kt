@@ -1,12 +1,12 @@
-package com.cestrada.keepingbooks.ui.payment
+package com.cestrada.keepingbooks.ui.payment.list
 
 import android.animation.ObjectAnimator
+import android.animation.ValueAnimator
 import android.annotation.SuppressLint
-import android.content.res.ColorStateList
-import android.graphics.Color
-import android.os.CountDownTimer
 import android.util.Log
 import android.view.View
+import android.view.animation.DecelerateInterpolator
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -33,22 +33,30 @@ class PaymentItemViewHolder(private val view: View) : RecyclerView.ViewHolder(vi
     private var isSwipingAlreadyStart: Boolean = false
     private var isSwipe = false
 
+    private var isDeleting = false
 
+    private val constraintPaymentRoot: ConstraintLayout =  view.findViewById(R.id.constraint_payment_root)
+    private val constraintPaymentInfo: ConstraintLayout =  view.findViewById(R.id.constraint_payment_info)
+    private val imagePaymentType: ImageView = view.findViewById(R.id.image_type_payment)
+    private val imagePaymentDelete: ImageView = view.findViewById(R.id.image_delete)
+    private val imagePaymentEdit: ImageView = view.findViewById(R.id.image_edit)
+    private val textPaymentDescription: TextView = view.findViewById(R.id.text_payment_description)
+    private val textPaymentTotal: TextView = view.findViewById(R.id.text_payment_total)
+    private val textPaymentDate: TextView = view.findViewById(R.id.text_payment_date)
 
-    val constraintPaymentRoot: ConstraintLayout =  view.findViewById(R.id.constraint_payment_root)
-    val constraintPaymentInfo: ConstraintLayout =  view.findViewById(R.id.constraint_payment_info)
-    val imagePaymentType: ImageView = view.findViewById(R.id.image_type_payment)
-    val imagePaymentDelete: ImageView = view.findViewById(R.id.image_delete)
-    val imagePaymentEdit: ImageView = view.findViewById(R.id.image_edit)
-    val textPaymentDescription: TextView = view.findViewById(R.id.text_payment_description)
-    val textPaymentTotal: TextView = view.findViewById(R.id.text_payment_total)
-    val textPaymentDate: TextView = view.findViewById(R.id.text_payment_date)
+    private val constraintDeleting: ConstraintLayout =  view.findViewById(R.id.constraint_delete)
+    private val buttonCancelDelete: Button = view.findViewById(R.id.button_cancel_delete)
+    private val textDeleting: TextView =  view.findViewById(R.id.text_deleting)
+    private var va: ValueAnimator? = null
 
-    val mContext = view.context
-    private lateinit var mPayment: Payment
+    private val mContext = view.context
+    private var mOnDeleteListener: OnDeleteListener? = null
+
 
     private val onTouchExtendsListener = object : OnTouchExtendsListener() {
         override fun onDoubleTap() {
+            if(isDeleting) return
+
             if(isSwipe) {
                 moveToInitPosPaymentInfoView()
                 resizeToInitPaymentsOptions()
@@ -62,6 +70,7 @@ class PaymentItemViewHolder(private val view: View) : RecyclerView.ViewHolder(vi
 
         }
         override fun onSwipingHorizontal(movement: Float, direction: SwipeDirection) {
+            if(isDeleting) return
             val isSwipingLeft = direction == SwipeDirection.LEFT
 
             //Don't care if start by swiping right
@@ -78,29 +87,68 @@ class PaymentItemViewHolder(private val view: View) : RecyclerView.ViewHolder(vi
 
         }
         override fun onFinishSwiping() {
+            if(isDeleting) return
             checkDistanceOfSwipe()
         }
     }
 
     init {
         constraintPaymentRoot.setOnTouchListener(onTouchExtendsListener)
+        imagePaymentDelete.setOnClickListener { startDeleteAnimation() }
+        buttonCancelDelete.setOnClickListener { cancelDelete() }
+        moveToInitPosPaymentInfoView()
     }
 
-    fun setUpView(payment: Payment, listener: OnPaymentOptionsClickListener){
-        mPayment =  payment
+    fun setUpPayment(payment: Payment){
+        this.textPaymentDescription.text = payment.description
+        this.textPaymentTotal.text = mContext.resources.getString(R.string.list_payment_info_cost, payment.total)
+        this.textPaymentDate.text = payment.date.getTimePassedUntilToday()
 
-        this.textPaymentDescription.text = mPayment.description
-        this.textPaymentTotal.text = mContext.resources.getString(R.string.list_payment_info_cost, mPayment.total)
-        this.textPaymentDate.text = mPayment.date.getTimePassedUntilToday()
+        setUpPaymentTypeIcon(payment.payment_type)
+    }
+    fun setOnDeleteListener(listener: OnDeleteListener){
+        mOnDeleteListener = listener
+    }
 
-        imagePaymentEdit.setOnClickListener { listener.onEdit(mPayment) }
-        imagePaymentDelete.setOnClickListener { listener.onDelete(mPayment) }
+    private fun startDeleteAnimation(){
+        isDeleting = true
+        buttonCancelDelete.isClickable = true
+        buttonCancelDelete.visibility = View.VISIBLE
+        va = ValueAnimator.ofInt(textDeleting.width, constraintDeleting.width)
+        va?.duration = (3.5 * 1000).toLong()
+        va?.interpolator = DecelerateInterpolator()
+        va?.addUpdateListener {
+            textDeleting.layoutParams.width = it.animatedValue as Int
+            textDeleting.requestLayout()
+        }
+        va?.doOnEnd {
+            //buttonCancelDelete.isClickable = false
+            Log.d(TAG, "startDeleteAnimation: Deleted Ended")
+            if(isDeleting) {
+                if(mOnDeleteListener != null){
+                    moveToInitPosPaymentInfoView()
+                    mOnDeleteListener?.onDelete()
+                }
+            }
+        }
+
+        va?.start()
+    }
+    private fun cancelDelete(){
+        Log.d(TAG, "cancelDelete: Cancel Delete")
+        moveToInitPosPaymentInfoView()
+        if (va != null) va?.cancel()
+    }
+
+    private fun setToInitView(){
         imagePaymentDelete.isClickable = false
         imagePaymentEdit.isClickable = false
-
-        setUpPaymentTypeIcon(mPayment.payment_type)
+        buttonCancelDelete.isClickable = false
+        buttonCancelDelete.visibility = View.GONE
+        textDeleting.layoutParams.width = 0
+        isDeleting = false
+        textDeleting.requestLayout()
     }
-
     private fun setUpPaymentTypeIcon(paymentType: PaymentType){
         when (paymentType) {
             PaymentType.CREDIT -> {
@@ -196,6 +244,7 @@ class PaymentItemViewHolder(private val view: View) : RecyclerView.ViewHolder(vi
     }
     private fun moveToInitPosPaymentInfoView(){
         Log.d(TAG, "moveToInitPosPaymentInfoView")
+        setToInitView()
         movePaymentInfoView(0f, constraintPaymentInfo.translationX, false)
     }
     private fun moveToSwipedPosPaymentInfoView(){
@@ -214,4 +263,8 @@ class PaymentItemViewHolder(private val view: View) : RecyclerView.ViewHolder(vi
         anim.start()
     }
 
+
+    interface OnDeleteListener {
+        fun onDelete()
+    }
 }
